@@ -6,24 +6,41 @@ using System.Configuration;
 using Microsoft.Practices.Unity.Configuration;
 using Microsoft.Practices.Unity;
 using CF.Repo.Common;
+using NLog;
 
 namespace CrudRepository
 {
     static class Program
     {
+
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
-        {
-            IUnityContainer container;           
+        {        
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            container = ContainerExtension.ContainerInit();
-            //var formManage = container.Resolve<frmManageDepartment>();
-            var form = container.Resolve<FrmMain>();
-            Application.Run(form);
+
+            logger.Info("This is the first line of Main method.");
+
+            try
+            {
+                throw new Exception("This is one badass exception. :)");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "It seems the exception happened. :(");
+            }
+
+            logger.Warn("This is your last warning!");
+            logger.Fatal("And this is fatal error...");
+
+            //Instanciation du conteneur
+            var form = ContainerExtension.ContainerInit();
+            Application.Run(new FrmMain());
         }
 
 

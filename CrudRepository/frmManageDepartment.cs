@@ -18,7 +18,6 @@ namespace CrudRepository
     public partial class frmManageDepartment : Form
     {
         public RefreshDepartmentListDelegate RefreshDepartmentList;
-        IUnityContainer container;
         IDepartementService _deptService;
 
         private SortableBindingList<Departement> blDepartements = new SortableBindingList<Departement>();
@@ -26,13 +25,13 @@ namespace CrudRepository
 
         public frmManageDepartment()
         {
-            container = ContainerExtension.ContainerInit();
-            _deptService = container.Resolve<IDepartementService>();
+            _deptService = ContainerExtension.container.Resolve<IDepartementService>();
             InitializeComponent();
         }
 
         private void InitializeDepartmentList()
         {
+
             DepartementController departements = new DepartementController(_deptService);
             blDepartements = new SortableBindingList<Departement>(departements.GetAll());
             bsDepartements.DataSource = blDepartements;
@@ -42,18 +41,19 @@ namespace CrudRepository
 
         private void SaveDept_Click(object sender, EventArgs e)
         {
+
             int deptId = Convert.ToInt32(Label_DeptId.Text);
             DepartementController Departements = new DepartementController(_deptService);
             if (deptId == 0)
             {
                 try
                 {
-                        Departement departement = new Departement
-                        {
-                            Title = deptLabel.Text
-                           
-                        };
-                    Departements.AddDepartement(departement);                   
+                    Departement departement = new Departement
+                    {
+                        Title = deptLabel.Text
+                    };
+                    Departements.AddDepartement(departement);
+                    MessageBox.Show(this, "Departement Saved Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
@@ -65,11 +65,10 @@ namespace CrudRepository
                 var studToUpdate = Departements.GetByIdDepartement(deptId);
                 if (studToUpdate != null)
                 {
-                    studToUpdate.Title = deptLabel.Text;                    
+                    studToUpdate.Title = deptLabel.Text;
                 }
                 Departements.UpdateDepartement(studToUpdate);
             }
-            MessageBox.Show(this, "Departement Saved Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             InitializeDepartmentList();
         }
@@ -83,6 +82,12 @@ namespace CrudRepository
         {
             Label_DeptId.Text = "0";
             deptLabel.Text = string.Empty;
+        }
+
+        private void frmManageDepartment_FormClosed_1(object sender, FormClosedEventArgs e)
+        {
+            if (RefreshDepartmentList != null)
+                RefreshDepartmentList();
         }
     }
 }

@@ -15,23 +15,25 @@ using CrudRepository.LanguageExtensions;
 
 namespace CrudRepository
 {
-    
-    public partial class  FrmMain : Form
+
+    public partial class FrmMain : Form
     {
         private SortableBindingList<Student> blStudents = new SortableBindingList<Student>();
         private BindingSource bsStudents = new BindingSource();
-        
+
         IStudentService _studentService;
         IDepartementService _deptService;
 
-        public FrmMain(IStudentService studentService,IDepartementService deptService)
-        {
-            this._deptService = deptService;
-            this._studentService = studentService;
-            InitializeComponent();
-        }
+        //public FrmMain(IStudentService studentService,IDepartementService deptService)
+        //{
+        //    this._deptService = deptService;
+        //    this._studentService = studentService;
+        //    InitializeComponent();
+        //}
         public FrmMain()
         {
+            _studentService = ContainerExtension.container.Resolve<IStudentService>();
+            _deptService = ContainerExtension.container.Resolve<IDepartementService>();
             InitializeComponent();
         }
 
@@ -45,6 +47,7 @@ namespace CrudRepository
         private void LoadStudents()
         {
             StudentController students = new StudentController(_studentService);
+            var j = students.GetAll().ToList().Count();
             blStudents = new SortableBindingList<Student>(students.GetAll());
             bsStudents.DataSource = blStudents;
             dataGridView1.DataSource = bsStudents;
@@ -53,6 +56,7 @@ namespace CrudRepository
         private void InitializeDepartmentList()
         {
             DepartementController departements = new DepartementController(_deptService);
+            var i = departements.GetAll().ToList().Count();
             comboDept.DataSource = departements.GetAll();
             comboDept.DisplayMember = "Title";
             comboDept.ValueMember = "Id";
@@ -60,7 +64,7 @@ namespace CrudRepository
 
         private void PrepareDataGridViewColumns()
         {
-            List<string> hideColumns = new List<string>() { "Id", "AddedDate", "ModifiedDate", "IPAddress", "DeptId" , "Departement" };
+            List<string> hideColumns = new List<string>() { "Id", "AddedDate", "ModifiedDate", "IPAddress", "DeptId", "Departement" };
 
             foreach (string colName in hideColumns)
             {
@@ -80,24 +84,25 @@ namespace CrudRepository
             {
                 try
                 {
-                        Student student = new Student
-                        {
-                            FirstName = Txt_StudentName.Text,
-                            LastName = txtPrenom.Text,
-                            EnrollmentNumber = txtNumInsc.Text,
-                            Email = txtMail.Text,
-                            IPAddress = "exp",
-                            ModifiedDate = DateTime.UtcNow,
-                            DeptId = Convert.ToInt32(comboDept.SelectedValue)
-                        };
-                        student.AddedDate = DateTime.UtcNow;
-                        Students.AddStudent(student);
+                    Student student = new Student
+                    {
+                        FirstName = Txt_StudentName.Text,
+                        LastName = txtPrenom.Text,
+                        EnrollmentNumber = txtNumInsc.Text,
+                        Email = txtMail.Text,
+                        IPAddress = "exp",
+                        ModifiedDate = DateTime.UtcNow,
+                        DeptId = Convert.ToInt32(comboDept.SelectedValue)
+                    };
+                    student.AddedDate = DateTime.UtcNow;
+                    Students.AddStudent(student);
                 }
                 catch (Exception ex)
                 {
                     throw ex;
                 }
-            }else
+            }
+            else
             {
                 var studToUpdate = Students.GetByIdStudent(studentId);
                 if (studToUpdate != null)
