@@ -31,7 +31,7 @@ namespace UnitTest
             
             int nb = studentService.GetAll().ToList().Count();
             //stud = studentService.GetById(i);
-            Assert.AreEqual(4, nb);
+            Assert.AreEqual(3, nb);
         }
 
         [Test]
