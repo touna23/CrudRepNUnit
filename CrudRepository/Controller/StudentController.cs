@@ -2,6 +2,7 @@
 using CF.Repo;
 using CF.Repo.Common;
 using CF.Service;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.EntityClient;
@@ -15,6 +16,7 @@ namespace CrudRepository.Controller
 {
     public class StudentController
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
         private IStudentService _studentService;
 
         
@@ -55,6 +57,7 @@ namespace CrudRepository.Controller
             }
             catch (Exception ex)
             {
+                logger.Error(ex);
                 ValidationMessage = ex.ToString();
                 return false;
             }            

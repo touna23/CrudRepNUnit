@@ -12,7 +12,6 @@ namespace CrudRepository
 {
     static class Program
     {
-
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
