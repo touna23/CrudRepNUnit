@@ -100,7 +100,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SortableBindingList.cs" />
-    <Compile Include="Utils\Nlog\MyLogManager.cs" />
+    <Compile Include="Utils\FException\FoException.cs" />
+    <Compile Include="Utils\FException\Msg.cs" />
     <EmbeddedResource Include="EditorForm.resx">
       <DependentUpon>EditorForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -122,6 +123,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Content Include="Lib\Microsoft.Practices.ObjectBuilder2.dll" />
+    <Content Include="Lib\Microsoft.Practices.Unity.Configuration.dll" />
+    <Content Include="Lib\Microsoft.Practices.Unity.dll" />
+    <Content Include="Lib\Microsoft.Practices.Unity.StaticFactory.dll" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -162,12 +167,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="lib\Microsoft.Practices.ObjectBuilder2.dll" />
-    <Content Include="lib\Microsoft.Practices.Unity.Configuration.dll" />
-    <Content Include="lib\Microsoft.Practices.Unity.dll" />
-    <Content Include="lib\Microsoft.Practices.Unity.StaticFactory.dll" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

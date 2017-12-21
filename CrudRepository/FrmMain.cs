@@ -1,29 +1,23 @@
 ﻿using CF.Data;
-using CF.Repo;
 using CF.Service;
 using CrudRepository.Controller;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CrudRepository.LanguageExtensions;
 using NLog;
-using CrudRepository.Utils.Nlog;
+using CrudRepository.Utils.FException;
 
 namespace CrudRepository
 {
 
     public partial class FrmMain : Form
     {
-        private Logger logger = LogManager.GetCurrentClassLogger();
+        
         private SortableBindingList<Student> blStudents = new SortableBindingList<Student>();
         private BindingSource bsStudents = new BindingSource();
-        
+
 
         IStudentService _studentService;
         IDepartementService _deptService;
@@ -101,9 +95,9 @@ namespace CrudRepository
                     student.AddedDate = DateTime.UtcNow;
                     Students.AddStudent(student);
                 }
-                catch (Exception ex)
+                catch (FoException ex)
                 {
-                    logger.Error(ex, "It seems the exception happened. :(");
+                   
                     throw ex;
                 }
             }

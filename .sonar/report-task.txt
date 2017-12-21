@@ -1,0 +1,6 @@
+projectKey=TestProject
+serverUrl=http://localhost:9000
+serverVersion=6.6.0.32724
+dashboardUrl=http://localhost:9000/dashboard/index/TestProject
+ceTaskId=AWBa-WP2wasE1MfsLssS
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AWBa-WP2wasE1MfsLssS

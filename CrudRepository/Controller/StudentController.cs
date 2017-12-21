@@ -16,7 +16,7 @@ namespace CrudRepository.Controller
 {
     public class StudentController
     {
-        private Logger logger = LogManager.GetCurrentClassLogger();
+        
         private IStudentService _studentService;
 
         
@@ -56,8 +56,7 @@ namespace CrudRepository.Controller
                 return true;
             }
             catch (Exception ex)
-            {
-                logger.Error(ex);
+            {                
                 ValidationMessage = ex.ToString();
                 return false;
             }            
